@@ -14,7 +14,7 @@ export function optimizeEcoLlajta(macetas: number, totalWorkers: number) {
   let stages = [
     {
       name: "Triturado",
-      baseTime: 36,
+      baseTime: 1.8 * macetas,
       minWorkers: 2,
       workersPerEquip: 2,
       equip: 1,

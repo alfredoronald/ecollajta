@@ -114,8 +114,13 @@ export default function App() {
             </h2>
 
             <span className="mt-3 sm:mt-0 px-4 py-2 rounded-full bg-indigo-100 text-indigo-700 font-bold">
-              Tiempo Total: {result.totalTime.toFixed(2)} min
-            </span>
+  Tiempo Total:{" "}
+  {(result.totalTime / 60).toFixed(2)} h{" "}
+  <span className="text-gray-500 text-sm">
+    ({result.totalTime.toFixed(0)} min)
+  </span>
+</span>
+
           </div>
 
           {/* Tabla */}
