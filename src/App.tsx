@@ -131,7 +131,7 @@ export default function App() {
                 <tr className="bg-indigo-600 text-white text-center">
                   <th className="p-3 rounded-tl-xl">Etapa</th>
                   <th className="p-3">Operarios</th>
-                  <th className="p-3">Materiales</th>
+                  <th className="p-3">Equipo de Trabajo</th>
                   <th className="p-3 rounded-tr-xl">Tiempo</th>
                 </tr>
               </thead>
