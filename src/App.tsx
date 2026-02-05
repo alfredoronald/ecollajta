@@ -126,7 +126,7 @@ export default function App() {
                 <tr className="bg-indigo-600 text-white text-center">
                   <th className="p-3 rounded-tl-xl">Etapa</th>
                   <th className="p-3">Operarios</th>
-                  <th className="p-3">Equipos</th>
+                  <th className="p-3">Materiales</th>
                   <th className="p-3 rounded-tr-xl">Tiempo</th>
                 </tr>
               </thead>
@@ -144,10 +144,11 @@ export default function App() {
                     </td>
 
                     <td className="p-3">
-                      <span className="px-3 py-1 rounded-full bg-blue-100 text-blue-700 font-semibold">
-                        👷 {r.operarios}
-                      </span>
-                    </td>
+  <span className="px-3 py-1 rounded-full bg-blue-100 text-blue-700 font-semibold">
+    👷 {r.operarios} <span className="text-gray-500">(mín: {r.minOperarios})</span>
+  </span>
+</td>
+
 
                     <td className="p-3">
                       <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 font-semibold">

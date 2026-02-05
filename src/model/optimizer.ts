@@ -59,7 +59,7 @@ export function optimizeEcoLlajta(macetas: number, totalWorkers: number) {
       minWorkers: 2,
       workersPerEquip: 2,
       equip: 1,
-      equipoNombre: "Mesa",
+      equipoNombre: "Molde con mezcla",
     },
   ];
 
@@ -103,12 +103,14 @@ export function optimizeEcoLlajta(macetas: number, totalWorkers: number) {
 
   // ---- Resultados ----
   const resultados = stages.map((s) => ({
-    etapa: s.name,
-    operarios: allocation[s.name],
-    equipos: s.equip,
-    equipoNombre: s.equipoNombre,
-    tiempo: Number(stageTime(s).toFixed(2)),
-  }));
+  etapa: s.name,
+  operarios: allocation[s.name],
+  minOperarios: s.minWorkers, // ✅ nuevo campo
+  equipos: s.equip,
+  equipoNombre: s.equipoNombre,
+  tiempo: Number(stageTime(s).toFixed(2)),
+}));
+
 
   const totalTime = resultados.reduce((sum, r) => sum + r.tiempo, 0);
 
