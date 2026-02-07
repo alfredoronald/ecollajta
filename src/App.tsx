@@ -198,6 +198,45 @@ export default function App() {
               </span>
             </span>
           </div>
+          {/* 📌 Tabla Materiales */}
+<div className="mt-6 bg-gray-50 p-4 rounded-xl shadow">
+  <h3 className="text-lg font-bold text-indigo-700 mb-3">
+    🧪 Materiales Necesarios
+  </h3>
+
+  <table className="w-full text-sm border">
+    <thead>
+      <tr className="bg-indigo-600 text-white">
+        <th className="p-2">Material</th>
+        <th className="p-2">Cantidad</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr className="text-center border-t">
+        <td className="p-2 font-semibold">🥚 Cáscara de huevo</td>
+        <td className="p-2">{result.materiales.cascarasHuevo} kg</td>
+      </tr>
+
+      <tr className="text-center border-t">
+        <td className="p-2 font-semibold">🌿 Alginato</td>
+        <td className="p-2">{result.materiales.alginato} kg</td>
+      </tr>
+
+      <tr className="text-center border-t">
+        <td className="p-2 font-semibold">💧 Agua</td>
+        <td className="p-2">{result.materiales.agua} L</td>
+      </tr>
+
+      <tr className="text-center border-t">
+        <td className="p-2 font-semibold">🛢 Aceite</td>
+        <td className="p-2">{result.materiales.aceite} L</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
 
           {/* Tabla */}
           <div className="overflow-x-auto rounded-xl">
@@ -252,7 +291,10 @@ export default function App() {
             Modelo basado en asignación dinámica de operarios y equipos para minimizar el tiempo total.
           </p>
         </div>
+        
       )}
+
+      
     </div>
   );
 }
