@@ -1,5 +1,8 @@
-export function optimizeEcoLlajta(macetas: number, totalWorkers: number) {
-
+export function optimizeEcoLlajta(
+  macetas: number,
+  totalWorkers: number,
+  tiempos?: any
+) {
   // ✅ Restricción mínima real del modelo
   if (totalWorkers < 9) {
     return {
@@ -10,11 +13,24 @@ export function optimizeEcoLlajta(macetas: number, totalWorkers: number) {
     };
   }
 
+  // ✅ Valores estándar por defecto
+  const defaultTimes = {
+    triturado: 1.8,
+    medicion: 1.17,
+    engrase: 0.25,
+    mezcla: 1.32,
+    secadoBase: 17,
+    desmolde: 0.18,
+  };
+
+  // ✅ Si el usuario cambia, usar esos
+  const t = tiempos || defaultTimes;
+
   // Etapas base del proceso
   let stages = [
     {
       name: "Triturado",
-      baseTime: 1.8 * macetas,
+      baseTime: t.triturado * macetas,
       minWorkers: 2,
       workersPerEquip: 2,
       equip: 1,
@@ -22,7 +38,7 @@ export function optimizeEcoLlajta(macetas: number, totalWorkers: number) {
     },
     {
       name: "Medición",
-      baseTime: macetas * 1.17,
+      baseTime: t.medicion * macetas,
       minWorkers: 2,
       workersPerEquip: 2,
       equip: 1,
@@ -30,7 +46,7 @@ export function optimizeEcoLlajta(macetas: number, totalWorkers: number) {
     },
     {
       name: "Engrase",
-      baseTime: macetas * 0.25,
+      baseTime: t.engrase * macetas,
       minWorkers: 1,
       workersPerEquip: 1,
       equip: 1,
@@ -38,7 +54,7 @@ export function optimizeEcoLlajta(macetas: number, totalWorkers: number) {
     },
     {
       name: "Mezcla–Vaciado",
-      baseTime: macetas * 1.32,
+      baseTime: t.mezcla * macetas,
       minWorkers: 2,
       workersPerEquip: 2,
       equip: 1,
@@ -46,7 +62,7 @@ export function optimizeEcoLlajta(macetas: number, totalWorkers: number) {
     },
     {
       name: "Secado",
-      baseTime: 17 + (macetas - 1),
+      baseTime: t.secadoBase + (macetas - 1),
       minWorkers: 0,
       workersPerEquip: 0,
       equip: 0,
@@ -55,11 +71,11 @@ export function optimizeEcoLlajta(macetas: number, totalWorkers: number) {
     },
     {
       name: "Desmolde",
-      baseTime: macetas * 0.18,
+      baseTime: t.desmolde * macetas,
       minWorkers: 2,
       workersPerEquip: 2,
       equip: 1,
-      equipoNombre: "Molde con mezcla",
+      equipoNombre: "Mesa",
     },
   ];
 
@@ -82,7 +98,6 @@ export function optimizeEcoLlajta(macetas: number, totalWorkers: number) {
 
   // ---- Optimización iterativa ----
   while (remaining > 0) {
-
     let candidates = stages.filter((s) => !s.fixed);
 
     // cuello de botella
@@ -103,14 +118,13 @@ export function optimizeEcoLlajta(macetas: number, totalWorkers: number) {
 
   // ---- Resultados ----
   const resultados = stages.map((s) => ({
-  etapa: s.name,
-  operarios: allocation[s.name],
-  minOperarios: s.minWorkers, // ✅ nuevo campo
-  equipos: s.equip,
-  equipoNombre: s.equipoNombre,
-  tiempo: Number(stageTime(s).toFixed(2)),
-}));
-
+    etapa: s.name,
+    operarios: allocation[s.name],
+    minOperarios: s.minWorkers,
+    equipos: s.equip,
+    equipoNombre: s.equipoNombre,
+    tiempo: Number(stageTime(s).toFixed(2)),
+  }));
 
   const totalTime = resultados.reduce((sum, r) => sum + r.tiempo, 0);
 
